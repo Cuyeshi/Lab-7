@@ -1,44 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
-// Базовый класс для хранения информации о билетах на автобус
-class BusTicket
-{
-    public string Route { get; set; }
-    public double Price { get; set; }
-    public bool IsAvailable { get; set; }
-
-    public BusTicket(string route, double price)
-    {
-        Route = route;
-        Price = price;
-        IsAvailable = true;
-    }
-
-    public void SellTicket()
-    {
-        if (IsAvailable)
-        {
-            IsAvailable = false;
-            Console.WriteLine($"Продан билет на маршрут: {Route}");
-        }
-        else
-        {
-            Console.WriteLine($"Нет свободных мест на маршрут: {Route}. Билет не может быть продан.");
-        }
-    }
-}
-
-// Класс для хранения информации о билетах на автобус с указанием типа
-class BusTicketWithType : BusTicket
-{
-    public string BusType { get; set; }
-
-    public BusTicketWithType(string route, double price, string busType) : base(route, price)
-    {
-        BusType = busType;
-    }
-}
+using LibraryForClasses;
 
 class Program
 {
@@ -80,5 +42,7 @@ class Program
         {
             Console.WriteLine($"Маршрут: {pair.Key}, Свободные билеты: {pair.Value}");
         }
+
+        Console.ReadKey();
     }
 }
