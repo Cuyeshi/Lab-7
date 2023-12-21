@@ -51,7 +51,7 @@ namespace LibraryForClasses
             }
             if (count == 0)
             {
-                for (int i = begin - 1; i < end - 1; ++i)
+                for (int i = begin - 1; i < end - 1; i++)
                 {
                     freeSeats[i]--;
                 }

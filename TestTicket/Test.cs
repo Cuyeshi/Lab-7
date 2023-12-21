@@ -42,7 +42,7 @@ namespace TestTicket
 
             int[] result = bus.FreeSeats(begin, end);
 
-            int[] array = new int[] { 4, 5, 5, 5, 5 };
+            int[] array = new int[] { 12, 13, 13, 13, 13 };
 
             Assert.IsTrue(CompareArray(result, array));
         }
@@ -121,7 +121,7 @@ namespace TestTicket
             bus.FreeSeats(begin1, end1);
             int[] result = bus.FreeSeats(begin2, end2);
 
-            int[] array = new int[] { 6, 6, 7, 7, 8 };
+            int[] array = new int[] { 18, 18, 19, 19, 20 };
 
             Assert.IsTrue(CompareArray(result, array));
         }
@@ -159,7 +159,7 @@ namespace TestTicket
 
             int[] result = bus.FreeSeats(begin, end);
 
-            int[] array = new int[] { 5, 5, 5, 5, 5 };
+            int[] array = new int[] {13, 13, 13, 13, 13 };
 
             Assert.IsTrue(CompareArray(result, array));
         }
