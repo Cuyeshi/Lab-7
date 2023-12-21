@@ -6,9 +6,19 @@ namespace LibraryForClasses
     /// </summary>
     abstract public class Bus
     {
-        public int seats;
+        /// <summary>
+        /// Поле, хранящее значение количества мест в абстрактном классе.
+        /// </summary>
+        public int seats = 0;
+
+        /// <summary>
+        /// Массив билетов.
+        /// </summary>
         public Ticket[] tickets = new Ticket[10];
 
+        /// <summary>
+        /// Массив переменных, хранящих значения о количестве свободных мест в автобусе.
+        /// </summary>
         public int[] freeSeats = new int[5];
 
         /// <summary>
@@ -31,20 +41,22 @@ namespace LibraryForClasses
         public int[] FreeSeats(int begin, int end)
         {
             int count = 0;
+
             for (int i = begin - 1; i < end; i++)
             {
                 if (freeSeats[i] == 0)
                 {
-                    count = count + 1;
+                    count++;
                 }
             }
             if (count == 0)
             {
                 for (int i = begin - 1; i < end - 1; ++i)
                 {
-                    freeSeats[i] = freeSeats[i] - 1;
+                    freeSeats[i]--;
                 }
             }
+
             return freeSeats;
         }
     }

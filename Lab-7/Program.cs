@@ -1,23 +1,23 @@
 ﻿using LibraryForClasses;
 using System;
-using System.Net.Sockets;
 
-namespace Buses
+namespace Lab_7
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            MAZ bus1 = new MAZ();
-            Mersedes bus2 = new Mersedes();
-            Man bus3 = new Man();
+            MAZ MAZBus = new MAZ();
+            Mersedes MersedesBus = new Mersedes();
+            Man ManBus = new Man();
             Ticket[] ticket = new Ticket[10];
             for (int j = 0; j < 10; j++)
             {
                 ticket[j] = new Ticket();
             }
-            bool validateValue = false, validateValue1 = false;
+            bool validateValue = false, validateValue1;
             int s = 0, n1 = 0, n2 = 0, n3 = 0;
+
             try
             {
                 Console.Write("Введите количество маршрутов (максимум 10): ");
@@ -25,18 +25,20 @@ namespace Buses
                 ExceptionTickets.ValidateInt(inputK, out int outputK);
                 Console.Clear();
                 Console.WriteLine("|| 1 - Гомель; 2 - Речица; 3 - Светлогорск; 4 - Жлобин; 5 - Бобруйск ||");
-                Console.WriteLine("\nДля 10 маршрутов введите сами маршруты и автобус, на котором поедет пассажир.\n");
+                Console.WriteLine("\nВведите маршруты и автобус, на котором поедет пассажир.\n");
                 while (!validateValue || s <= outputK)
                 {
                     validateValue = false;
                     validateValue1 = false;
-                    Console.WriteLine("Маршрут:");
+
+                    Console.WriteLine("Построение маршрута:");
                     Console.Write("Начало (1-5): ");
                     string begin = Console.ReadLine();
                     ExceptionTickets.ValidateInt(begin, out ticket[s].Begin);
                     Console.Write("Конец (1-5): ");
                     string end = Console.ReadLine();
                     ExceptionTickets.ValidateInt(end, out ticket[s].End);
+                    
                     if (ticket[s].End < ticket[s].Begin || ticket[s].Begin < 1 || ticket[s].Begin > 5 || ticket[s].End < 1 || ticket[s].End > 5)
                     {
                         Console.WriteLine("Такого маршрута нет.");
@@ -47,24 +49,27 @@ namespace Buses
                         while (!validateValue1)
                         {
                             int coast = ticket[s].CoastRoute();
-                            int freeSeats1 = Program.SearchMin(bus1.freeSeats, ticket[s].Begin, ticket[s].End),
-                                freeSeats2 = Program.SearchMin(bus2.freeSeats, ticket[s].Begin, ticket[s].End),
-                                freeSeats3 = Program.SearchMin(bus3.freeSeats, ticket[s].Begin, ticket[s].End);
-                            int sale1 = bus1.coastBus + coast, 
-                                sale2 = bus2.coastBus + coast, 
-                                sale3 = bus3.coastBus + coast;
+                            int freeSeats1 = SearchMin(MAZBus.freeSeats, ticket[s].Begin, ticket[s].End),
+                                freeSeats2 = SearchMin(MersedesBus.freeSeats, ticket[s].Begin, ticket[s].End),
+                                freeSeats3 = SearchMin(ManBus.freeSeats, ticket[s].Begin, ticket[s].End);
+                            int sale1 = MAZBus.coastBus + coast, 
+                                sale2 = MersedesBus.coastBus + coast, 
+                                sale3 = ManBus.coastBus + coast;
                             
                             Console.WriteLine("Выберите автобус по цене и количеству мест(1-3).");
-                            Console.Write($"Автобус 1: {freeSeats1} мест {sale1} р.; Автобус 2: {freeSeats2} мест {sale2} р.; Автобус 3: {freeSeats3} мест {sale3} р.\n");
-                            int value = Convert.ToInt32(Console.ReadLine());
+                            Console.Write($"MAZ: {freeSeats1} мест {sale1} р.; Mersedes: {freeSeats2} мест {sale2} р.; Man: {freeSeats3} мест {sale3} р.\n");
+
+                            int value = 0;
+                            string switchValue = Console.ReadLine();
+                            ExceptionTickets.ValidateInt(switchValue, out value);
                             switch (value)
                             {
                                 case 1:
                                     if (freeSeats1 != 0)
                                     {
-                                        bus1.tickets[n1] = ticket[s];
+                                        MAZBus.tickets[n1] = ticket[s];
                                         n1++;
-                                        bus1.FreeSeats(ticket[s].Begin, ticket[s].End);
+                                        MAZBus.FreeSeats(ticket[s].Begin, ticket[s].End);
                                         s++;
                                         validateValue1 = true;
                                     }
@@ -77,9 +82,9 @@ namespace Buses
                                case 2:
                                     if (freeSeats2 != 0)
                                     {
-                                        bus2.tickets[n2] = ticket[s];
+                                        MersedesBus.tickets[n2] = ticket[s];
                                         n2++;
-                                        bus2.FreeSeats(ticket[s].Begin, ticket[s].End);
+                                        MersedesBus.FreeSeats(ticket[s].Begin, ticket[s].End);
                                         s++;
                                         validateValue1 = true;
                                     }
@@ -92,9 +97,9 @@ namespace Buses
                                 case 3:
                                     if (freeSeats3 != 0)
                                     {
-                                        bus3.tickets[n3] = ticket[s];
+                                        ManBus.tickets[n3] = ticket[s];
                                         n3++;
-                                        bus3.FreeSeats(ticket[s].Begin, ticket[s].End);
+                                        ManBus.FreeSeats(ticket[s].Begin, ticket[s].End);
                                         s++;
                                         validateValue1 = true;
                                     }
@@ -131,8 +136,8 @@ namespace Buses
                 int choice = 0;
                 try
                 {
-                    string number = Console.ReadLine();
-                    ExceptionTickets.ValidateInt(number, out choice);
+                    string switchNumber = Console.ReadLine();
+                    ExceptionTickets.ValidateInt(switchNumber, out choice);
                 }
                 catch (ExceptionTickets ex)
                 {
@@ -142,68 +147,18 @@ namespace Buses
                 {
                     case 1:
                         int begin = 0, end = 0;
-                        RemainingPlaces(bus1, begin, end);
+                        RemainingPlaces(MAZBus, begin, end);
                         break;
                     case 2:
                         begin = 0;
                         end = 0;
-                        try
-                        {
-                            Console.WriteLine("Введите маршрут: ");
-                            Console.Write("Начало (1-5): ");
-                            string input = Console.ReadLine();
-                            ExceptionTickets.ValidateInt(input, out begin);
-                            Console.Write("Конец (1-5): ");
-                            input = Console.ReadLine();
-                            ExceptionTickets.ValidateInt(input, out end);
-                        }
-                        catch (ExceptionTickets ex)
-                        {
-                            Console.WriteLine($"Ошибка ввода: {ex.Message}\n");
-                        }
-                        
-                        if (end > begin && begin > 1 && begin < 5 && end > 1 && end < 5)
-                        {
-                            int min = Program.SearchMin(bus2.freeSeats, begin, end);
-                            Console.Write("Количество пустых мест:");
-                            Console.WriteLine(min);
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Такого маршрута нет.");
-                            break;
-                        }
+                        RemainingPlaces(MersedesBus, begin, end);
+                        break;
                     case 3:
                         begin = 0;
                         end = 0;
-                        try
-                        {
-                            Console.WriteLine("Введите маршрут: ");
-                            Console.Write("Начало (1-5): ");
-                            string input = Console.ReadLine();
-                            ExceptionTickets.ValidateInt(input, out begin);
-                            Console.Write("Конец (1-5): ");
-                            input = Console.ReadLine();
-                            ExceptionTickets.ValidateInt(input, out end);
-                        }
-                        catch (ExceptionTickets ex)
-                        {
-                            Console.WriteLine($"Ошибка ввода: {ex.Message}\n");
-                        }
-                        
-                        if (end > begin && begin > 1 && begin < 5 && end > 1 && end < 5)
-                        {
-                            int min = Program.SearchMin(bus3.freeSeats, begin, end);
-                            Console.Write("Количество пустых мест:");
-                            Console.WriteLine(min);
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Такого маршрута нет.");
-                            break;
-                        }
+                        RemainingPlaces(ManBus, begin, end);
+                        break;
                     case 0:
                         exit = true;
                         break;
@@ -235,6 +190,12 @@ namespace Buses
             return min;
         }
 
+        /// <summary>
+        /// Метод для вывода информации о свободных местах в указываемом транспорте.
+        /// </summary>
+        /// <param name="bus"></param>
+        /// <param name="begin"></param>
+        /// <param name="end"></param>
         static void RemainingPlaces(Bus bus, int begin, int end)
         {
             try
@@ -252,7 +213,7 @@ namespace Buses
                 Console.WriteLine($"Ошибка ввода: {ex.Message}\n");
             }
 
-            if (end > begin && begin > 1 && begin < 5 && end > 1 && end < 5)
+            if (end > begin && begin >= 1 && begin <= 5 && end >= 1 && end <= 5)
             {
                 int min = Program.SearchMin(bus.freeSeats, begin, end);
                 Console.Write("Количество пустых мест:");

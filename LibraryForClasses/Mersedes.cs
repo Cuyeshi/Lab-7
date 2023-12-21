@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace LibraryForClasses
 {
     /// <summary>
@@ -11,12 +6,18 @@ namespace LibraryForClasses
     /// </summary>
     public class Mersedes : Bus
     {
-        public int coastBus = 360;
-
-        public int carSeats = 6;
+        /// <summary>
+        /// Поле, хранящее значение базовой стоимости проезда на автобусе типа Mersedes.
+        /// </summary>
+        public int coastBus = 380;
 
         /// <summary>
-        /// Коструктор для данного класса.
+        /// Поле, хранящее значение количества мест в автобусе типа Mersedes.
+        /// </summary>
+        public int carSeats = 15;
+
+        /// <summary>
+        /// Конструктор для задания параметров объекта класса-потомка Mersedes.
         /// </summary>
         public Mersedes() : base()
         {

@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using LibraryForClasses;
 
 namespace TestTicket
 {
+    /// <summary>
+    /// Класс для тестирования программы.
+    /// </summary>
     [TestClass]
     public class Tests
     {

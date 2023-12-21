@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryForClasses
 {
@@ -11,7 +7,10 @@ namespace LibraryForClasses
     /// </summary>
     public class ExceptionTickets : Exception
     {
-
+        /// <summary>
+        /// Конструктор для создания собственных исключений.
+        /// </summary>
+        /// <param name="message"></param>
         public ExceptionTickets(string message) : base(message) { }
 
         /// <summary>
