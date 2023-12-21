@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace LibraryForClasses
 {
     /// <summary>
@@ -37,7 +31,7 @@ namespace LibraryForClasses
         public int[] FreeSeats(int begin, int end)
         {
             int count = 0;
-            for (int i = begin - 1; i < end - 1; i++)
+            for (int i = begin - 1; i < end; i++)
             {
                 if (freeSeats[i] == 0)
                 {
