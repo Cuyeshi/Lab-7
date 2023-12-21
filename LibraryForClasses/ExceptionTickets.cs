@@ -31,6 +31,10 @@ namespace LibraryForClasses
             {
                 throw new ExceptionTickets("Строка содержит вещественное число или текст!");
             }
+            if (result < 0)
+            {
+                throw new ExceptionTickets("Введённое число меньше нуля!");
+            }
         }
     }
 }

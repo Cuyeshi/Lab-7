@@ -18,10 +18,13 @@ namespace Buses
             }
             bool validateValue = false, validateValue1 = false;
             int s = 0, n1 = 0, n2 = 0, n3 = 0;
-            Console.WriteLine("Для 10 маршрутов введите сами маршруты и автобус, на котором поедет пассажир.\n");
-            while (!validateValue || s < 10)
+            try
             {
-                try
+                Console.Write("Введите количество маршрутов (максимум 10): ");
+                string inputK = Console.ReadLine();
+                ExceptionTickets.ValidateInt(inputK, out int outputK);
+                Console.WriteLine("Для 10 маршрутов введите сами маршруты и автобус, на котором поедет пассажир.\n");
+                while (!validateValue || s < outputK)
                 {
                     validateValue = false;
                     Console.WriteLine("Маршрут:");
@@ -41,77 +44,85 @@ namespace Buses
                         while (!validateValue1)
                         {
                             validateValue1 = false;
-                            int coast = ticket[s].CoastRoute(), freeSeats1 = Program.SearchMin(bus1.freeSeats, ticket[s].Begin, ticket[s].End), freeSeats2 = Program.SearchMin(bus2.freeSeats, ticket[s].Begin, ticket[s].End), freeSeats3 = Program.SearchMin(bus3.freeSeats, ticket[s].Begin, ticket[s].End);
+                            int coast = ticket[s].CoastRoute();
+                            int freeSeats1 = Program.SearchMin(bus1.freeSeats, ticket[s].Begin, ticket[s].End);
+                            int freeSeats2 = Program.SearchMin(bus2.freeSeats, ticket[s].Begin, ticket[s].End);
+                            int freeSeats3 = Program.SearchMin(bus3.freeSeats, ticket[s].Begin, ticket[s].End);
                             int sale1 = bus1.coastBus + coast, sale2 = bus2.coastBus + coast, sale3 = bus3.coastBus + coast;
                             string sales = "Автобус 1: " + freeSeats1 + " мест " + sale1 + "р.; Автобус 2: " + freeSeats2 + " мест " + sale2 + "р.; Автобус 3: " + freeSeats3 + " мест " + sale3 + "р.: ";
                             Console.WriteLine("Выберите автобус по цене и количеству мест(1-3).");
                             Console.Write(sales);
                             int value = Convert.ToInt32(Console.ReadLine());
-                            if (value == 1)
+                            switch (value)
                             {
-                                if (freeSeats1 != 0)
-                                {
-                                    bus1.tickets[n1] = ticket[s];
-                                    n1++;
-                                    bus1.FreeSeats(ticket[s].Begin, ticket[s].End);
-                                    s++;
-                                    validateValue1 = true;
+                               case 1:
+                                    if (freeSeats1 != 0)
+                                    {
+                                        bus1.tickets[n1] = ticket[s];
+                                        n1++;
+                                        bus1.FreeSeats(ticket[s].Begin, ticket[s].End);
+                                        s++;
+                                        validateValue1 = true;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Мест в автобусе нет.");
+                                    }
+                                    break;
+
+                               case 2:
+                                    if (freeSeats2 != 0)
+                                    {
+                                        bus2.tickets[n2] = ticket[s];
+                                        n2++;
+                                        bus2.FreeSeats(ticket[s].Begin, ticket[s].End);
+                                        s++;
+                                        validateValue1 = true;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Мест в автобусе нет.");
+                                    }
+                                    break;
+
+                                case 3:
+                                    if (freeSeats3 != 0)
+                                    {
+                                        bus3.tickets[n3] = ticket[s];
+                                        n3++;
+                                        bus3.FreeSeats(ticket[s].Begin, ticket[s].End);
+                                        s++;
+                                        validateValue1 = true;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Мест в автобусе нет.");
+                                    }
+                                    break;
+
+                                default:
+                                    Console.WriteLine("Такого автобуса нет!");
+                                    break;
                                 }
-                                else
-                                {
-                                    Console.WriteLine("Мест в автобусе нет.");
-                                }
-                            }
-                            if (value == 2)
-                            {
-                                if (freeSeats2 != 0)
-                                {
-                                    bus2.tickets[n2] = ticket[s];
-                                    n2++;
-                                    bus2.FreeSeats(ticket[s].Begin, ticket[s].End);
-                                    s++;
-                                    validateValue1 = true;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Мест в автобусе нет.");
-                                }
-                            }
-                            if (value == 3)
-                            {
-                                if (freeSeats3 != 0)
-                                {
-                                    bus3.tickets[n3] = ticket[s];
-                                    n3++;
-                                    bus3.FreeSeats(ticket[s].Begin, ticket[s].End);
-                                    s++;
-                                    validateValue1 = true;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Мест в автобусе нет.");
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("Такого автобуса нет!");
                             }
                         }
-                    }
-                }
-                catch (ExceptionTickets ex)
-                {
-                    Console.WriteLine($"Ошибка ввода: {ex.Message}\n");
                 }
             }
+            catch (ExceptionTickets ex)
+            {
+                Console.WriteLine($"Ошибка ввода: {ex.Message}\n");
+            }
+
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("\nВыберите действие:");
-                Console.WriteLine("1.Вывести свободные места для первого автобуса.");
-                Console.WriteLine("2.Вывести свободные места для второго автобуса.");
-                Console.WriteLine("3.Вывести свободные места для третьего автобуса.");
-                Console.WriteLine("0.Выход.\n");
+                Console.WriteLine("╔══════════════════════════════════════════════════╗");
+                Console.WriteLine("║               Выберите действие:                 ║");
+                Console.WriteLine("║ 1.Вывести свободные места для первого автобуса.  ║");
+                Console.WriteLine("║ 2.Вывести свободные места для второго автобуса.  ║");
+                Console.WriteLine("║ 3.Вывести свободные места для третьего автобуса. ║");
+                Console.WriteLine("║                   0.Выход.                       ║");
+                Console.WriteLine("╚══════════════════════════════════════════════════╝\n");
                 int choice = 0;
                 try
                 {
