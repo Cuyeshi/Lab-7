@@ -14,7 +14,7 @@ namespace LibraryForClasses
         /// <summary>
         /// Поле, хранящее значение количества мест в автобусе типа Man.
         /// </summary>
-        public int carSeats = 13;
+        public int carSeats = 12;
 
         /// <summary>
         /// Конструктор для задания параметров объекта класса-потомка Man.
