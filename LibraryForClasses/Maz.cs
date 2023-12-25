@@ -14,7 +14,7 @@ namespace LibraryForClasses
         /// <summary>
         /// Поле, хранящее значение количества мест в автобусе типа MAZ.
         /// </summary>
-        public int carSeats = 20;
+        public int carSeats = 1;
 
         /// <summary>
         /// Конструктор для задания параметров объекта класса-потомка MAZ.

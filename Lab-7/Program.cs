@@ -28,7 +28,7 @@ namespace Lab_7
                         Console.Clear();
                         Console.WriteLine("\n╔══════════════════════════════════════════════╗");
                         Console.WriteLine("║                Выберите действие:            ║");
-                        Console.WriteLine("║              1. Добавить маршрут             ║");
+                        Console.WriteLine("║       1. Создать новый список маршрутов      ║");
                         Console.WriteLine("║    2. Вывести информацию о всех маршрутах    ║");
                         Console.WriteLine("║        3. Вывести свободные места для        ║");
                         Console.WriteLine("║         определённого типа автобуса          ║");
@@ -73,9 +73,9 @@ namespace Lab_7
                                             sale2 = MersedesBus.coastBus + coast;
                                             sale3 = ManBus.coastBus + coast;
 
-                                            Console.WriteLine("Выберите автобус по цене и количеству мест(1-3).");
-                                            Console.Write($"MAZ: {freeSeats1} мест {sale1} р.; Mersedes: {freeSeats2} мест {sale2} р.; " +
-                                                $"Man: {freeSeats3} мест {sale3} р.\n");
+                                            Console.WriteLine("\nВыберите автобус по цене и количеству мест(1-3):");
+                                            Console.Write($"1). MAZ: {freeSeats1} мест {sale1} р.; \n2). Mersedes: {freeSeats2} мест {sale2} р.; " +
+                                                $"\n3). Man: {freeSeats3} мест {sale3} р.\n");
 
                                             
                                             string switchValue = Console.ReadLine();
@@ -141,9 +141,10 @@ namespace Lab_7
 
                             case 2:
                                 Console.WriteLine("Список купленных билетов:");
-                                for (i = 0; i < routesCount; i++)
+                                for (i = 0; i < 10; i++)
                                 {
-                                    Console.WriteLine($"{i + 1}: автобус {ticket[i].type}, маршрут {ticket[i].begin} - {ticket[i].end}.");
+                                    if (ticket[i].begin != 0 && ticket[i].end != 0 && ticket[i].type != "нет")
+                                        Console.WriteLine($"{i + 1}: автобус {ticket[i].type}, маршрут {ticket[i].begin} - {ticket[i].end}.");
                                 }
                                 Console.ReadKey();
                                 break;
