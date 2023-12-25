@@ -9,13 +9,16 @@ namespace LibraryForClasses
         /// <summary>
         /// Поле, хранящее значение номера начала вводимого маршрута.
         /// </summary>
-        public int Begin;
+        public int begin;
 
         /// <summary>
         /// Поле, хранящее значение номера конца вводимого маршрута.
         /// </summary>
-        public int End;
+        public int end;
 
+        /// <summary>
+        /// Поле, хранящее значение типа автобуса для билета.
+        /// </summary>
         public string type;
 
         /// <summary>
@@ -23,8 +26,9 @@ namespace LibraryForClasses
         /// </summary>
         public Ticket()
         {
-            Begin = 0;
-            End = 0;
+            begin = 0;
+            end = 0;
+            type = "нет";
         }
 
         /// <summary>
@@ -33,7 +37,7 @@ namespace LibraryForClasses
         /// <returns></returns>
         public int CoastRoute()
         {
-            int coast = (End - Begin) * 7;
+            int coast = (end - begin) * 7;
             return coast;
         }
     }

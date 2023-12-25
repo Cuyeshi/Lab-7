@@ -25,8 +25,8 @@ namespace Lab_7
                 {
                     while (!exit)
                     {
-                        //Console.Clear();
-                        Console.WriteLine("╔══════════════════════════════════════════════╗");
+                        Console.Clear();
+                        Console.WriteLine("\n╔══════════════════════════════════════════════╗");
                         Console.WriteLine("║                Выберите действие:            ║");
                         Console.WriteLine("║              1. Добавить маршрут             ║");
                         Console.WriteLine("║    2. Вывести информацию о всех маршрутах    ║");
@@ -43,7 +43,7 @@ namespace Lab_7
                             case 1:
                                 Console.Write("Введите количество маршрутов (максимум 10): ");
                                 string inputK = Console.ReadLine();
-                                ExceptionTickets.ValidateInt(inputK, out routesCount);
+                                ExceptionTickets.ValidateIntForInput(inputK, out routesCount);
 
                                 Console.WriteLine("|| 1 - Гомель; 2 - Речица; 3 - Светлогорск; 4 - Жлобин; 5 - Бобруйск ||");                                
                                 for (i = 0; i < routesCount; i++)
@@ -54,10 +54,10 @@ namespace Lab_7
                                     string begin = Console.ReadLine();
                                     Console.Write("высадки - ");
                                     string end = Console.ReadLine();
-                                    ExceptionTickets.ValidateInt(begin, out ticket[s].Begin);
-                                    ExceptionTickets.ValidateInt(end, out ticket[s].End);
+                                    ExceptionTickets.ValidateInt(begin, out ticket[s].begin);
+                                    ExceptionTickets.ValidateInt(end, out ticket[s].end);
 
-                                    if (ticket[s].End < ticket[s].Begin || ticket[s].Begin < 1 || ticket[s].Begin > 5 || ticket[s].End < 1 || ticket[s].End > 5)
+                                    if (ticket[s].end < ticket[s].begin || ticket[s].begin < 1 || ticket[s].begin > 5 || ticket[s].end < 1 || ticket[s].end > 5)
                                     {
                                         Console.WriteLine("\nТакого маршрута нет.");
                                     }
@@ -66,9 +66,9 @@ namespace Lab_7
                                         while (!validateValue1)
                                         {
                                             int coast = ticket[s].CoastRoute();
-                                            freeSeats1 = SearchMin(MAZBus.freeSeats, ticket[s].Begin, ticket[s].End);
-                                            freeSeats2 = SearchMin(MersedesBus.freeSeats, ticket[s].Begin, ticket[s].End);
-                                            freeSeats3 = SearchMin(ManBus.freeSeats, ticket[s].Begin, ticket[s].End);
+                                            freeSeats1 = SearchMin(MAZBus.freeSeats, ticket[s].begin, ticket[s].end);
+                                            freeSeats2 = SearchMin(MersedesBus.freeSeats, ticket[s].begin, ticket[s].end);
+                                            freeSeats3 = SearchMin(ManBus.freeSeats, ticket[s].begin, ticket[s].end);
                                             sale1 = MAZBus.coastBus + coast;
                                             sale2 = MersedesBus.coastBus + coast;
                                             sale3 = ManBus.coastBus + coast;
@@ -88,7 +88,7 @@ namespace Lab_7
                                                         ticket[s].type = "Maz";
                                                         MAZBus.tickets[n1] = ticket[s];
                                                         n1++;
-                                                        MAZBus.FreeSeats(ticket[s].Begin, ticket[s].End);
+                                                        MAZBus.FreeSeats(ticket[s].begin, ticket[s].end);
                                                         s++;
                                                         validateValue1 = true;
                                                     }
@@ -104,7 +104,7 @@ namespace Lab_7
                                                         ticket[s].type = "Mersedes";
                                                         MersedesBus.tickets[n2] = ticket[s];
                                                         n2++;
-                                                        MersedesBus.FreeSeats(ticket[s].Begin, ticket[s].End);
+                                                        MersedesBus.FreeSeats(ticket[s].begin, ticket[s].end);
                                                         s++;
                                                         validateValue1 = true;
                                                     }
@@ -120,7 +120,7 @@ namespace Lab_7
                                                         ticket[s].type = "Man";
                                                         ManBus.tickets[n3] = ticket[s];
                                                         n3++;
-                                                        ManBus.FreeSeats(ticket[s].Begin, ticket[s].End);
+                                                        ManBus.FreeSeats(ticket[s].begin, ticket[s].end);
                                                         s++;
                                                         validateValue1 = true;
                                                     }
@@ -143,18 +143,7 @@ namespace Lab_7
                                 Console.WriteLine("Список купленных билетов:");
                                 for (i = 0; i < routesCount; i++)
                                 {
-                                    switch (ticket[i].type)
-                                    {
-                                        case "Maz":
-                                            Console.WriteLine($"{i + 1}: автобус {ticket[i].type}, маршрут {ticket[i].Begin} - {ticket[i].End}.");
-                                            break;
-                                        case "Mersedes":
-                                            Console.WriteLine($"{i + 1}: автобус {ticket[i].type}, маршрут {ticket[i].Begin} - {ticket[i].End}.");
-                                            break;
-                                        case "Man":
-                                            Console.WriteLine($"{i + 1}: автобус {ticket[i].type}, маршрут {ticket[i].Begin} - {ticket[i].End}.");
-                                            break;
-                                    }
+                                    Console.WriteLine($"{i + 1}: автобус {ticket[i].type}, маршрут {ticket[i].begin} - {ticket[i].end}.");
                                 }
                                 Console.ReadKey();
                                 break;
@@ -189,6 +178,18 @@ namespace Lab_7
                                         break;
                                 }
 
+                                break;
+
+                            case 4:
+                                Console.Write("Введите номер маршрута для его удаления: ");
+                                string inputN = Console.ReadLine();
+                                ExceptionTickets.ValidateInt(inputN, out int outputN);
+                                if (outputN > 0 && outputN <= 10)
+                                    ticket[outputN - 1] = new Ticket();
+                                else
+                                    Console.WriteLine("Вы ввели неверный номер маршрута!");
+
+                                Console.ReadKey();
                                 break;
 
                             case 0:
