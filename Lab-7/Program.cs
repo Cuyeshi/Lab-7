@@ -10,9 +10,14 @@ namespace Lab_7
             MAZ MAZBus = new MAZ();
             Mersedes MersedesBus = new Mersedes();
             Man ManBus = new Man();
-            
+            Ticket[] ticket = new Ticket[10];
+            for (int j = 0; j < 10; j++)
+            {
+                ticket[j] = new Ticket();
+            }
+
             bool tryCatchExit = true, exit = false, validateValue1;
-            int s = 0, n1 = 0, n2 = 0, n3 = 0;
+            int freeSeats1, freeSeats2, freeSeats3, sale1, sale2, sale3, routesCount = 0, s = 0, n1 = 0, n2 = 0, n3 = 0, i;
 
             while (tryCatchExit)
             {
@@ -20,13 +25,13 @@ namespace Lab_7
                 {
                     while (!exit)
                     {
-                        Console.Clear();
+                        //Console.Clear();
                         Console.WriteLine("╔══════════════════════════════════════════════╗");
                         Console.WriteLine("║                Выберите действие:            ║");
                         Console.WriteLine("║              1. Добавить маршрут             ║");
                         Console.WriteLine("║    2. Вывести информацию о всех маршрутах    ║");
                         Console.WriteLine("║        3. Вывести свободные места для        ║");
-                        Console.WriteLine("║         определённого типа автобуса.         ║");
+                        Console.WriteLine("║         определённого типа автобуса          ║");
                         Console.WriteLine("║              4. Удалить маршрут              ║");
                         Console.WriteLine("║                   0.Выход.                   ║");
                         Console.WriteLine("╚══════════════════════════════════════════════╝\n");
@@ -38,17 +43,10 @@ namespace Lab_7
                             case 1:
                                 Console.Write("Введите количество маршрутов (максимум 10): ");
                                 string inputK = Console.ReadLine();
-                                ExceptionTickets.ValidateInt(inputK, out int outputK);
+                                ExceptionTickets.ValidateInt(inputK, out routesCount);
 
-                                Ticket[] ticket = new Ticket[10];
-                                for (int j = 0; j < 10; j++)
-                                {
-                                    ticket[j] = new Ticket();
-                                }
-
-                                Console.WriteLine("|| 1 - Гомель; 2 - Речица; 3 - Светлогорск; 4 - Жлобин; 5 - Бобруйск ||");
-                                Console.WriteLine("\nВведите маршруты и автобус, на котором поедет пассажир.\n");
-                                while (s <= outputK)
+                                Console.WriteLine("|| 1 - Гомель; 2 - Речица; 3 - Светлогорск; 4 - Жлобин; 5 - Бобруйск ||");                                
+                                for (i = 0; i < routesCount; i++)
                                 {
                                     validateValue1 = false;
                                     Console.WriteLine("\nВведите номер пункта: ");
@@ -68,12 +66,12 @@ namespace Lab_7
                                         while (!validateValue1)
                                         {
                                             int coast = ticket[s].CoastRoute();
-                                            int freeSeats1 = SearchMin(MAZBus.freeSeats, ticket[s].Begin, ticket[s].End),
-                                                freeSeats2 = SearchMin(MersedesBus.freeSeats, ticket[s].Begin, ticket[s].End),
-                                                freeSeats3 = SearchMin(ManBus.freeSeats, ticket[s].Begin, ticket[s].End);
-                                            int sale1 = MAZBus.coastBus + coast,
-                                                sale2 = MersedesBus.coastBus + coast,
-                                                sale3 = ManBus.coastBus + coast;
+                                            freeSeats1 = SearchMin(MAZBus.freeSeats, ticket[s].Begin, ticket[s].End);
+                                            freeSeats2 = SearchMin(MersedesBus.freeSeats, ticket[s].Begin, ticket[s].End);
+                                            freeSeats3 = SearchMin(ManBus.freeSeats, ticket[s].Begin, ticket[s].End);
+                                            sale1 = MAZBus.coastBus + coast;
+                                            sale2 = MersedesBus.coastBus + coast;
+                                            sale3 = ManBus.coastBus + coast;
 
                                             Console.WriteLine("Выберите автобус по цене и количеству мест(1-3).");
                                             Console.Write($"MAZ: {freeSeats1} мест {sale1} р.; Mersedes: {freeSeats2} мест {sale2} р.; " +
@@ -87,6 +85,7 @@ namespace Lab_7
                                                 case 1:
                                                     if (freeSeats1 != 0)
                                                     {
+                                                        ticket[s].type = "Maz";
                                                         MAZBus.tickets[n1] = ticket[s];
                                                         n1++;
                                                         MAZBus.FreeSeats(ticket[s].Begin, ticket[s].End);
@@ -102,6 +101,7 @@ namespace Lab_7
                                                 case 2:
                                                     if (freeSeats2 != 0)
                                                     {
+                                                        ticket[s].type = "Mersedes";
                                                         MersedesBus.tickets[n2] = ticket[s];
                                                         n2++;
                                                         MersedesBus.FreeSeats(ticket[s].Begin, ticket[s].End);
@@ -117,6 +117,7 @@ namespace Lab_7
                                                 case 3:
                                                     if (freeSeats3 != 0)
                                                     {
+                                                        ticket[s].type = "Man";
                                                         ManBus.tickets[n3] = ticket[s];
                                                         n3++;
                                                         ManBus.FreeSeats(ticket[s].Begin, ticket[s].End);
@@ -135,19 +136,38 @@ namespace Lab_7
                                             }
                                         }
                                     }
-                                    s++;
                                 }
                                 break;
 
                             case 2:
+                                Console.WriteLine("Список купленных билетов:");
+                                for (i = 0; i < routesCount; i++)
+                                {
+                                    switch (ticket[i].type)
+                                    {
+                                        case "Maz":
+                                            Console.WriteLine($"{i + 1}: автобус {ticket[i].type}, маршрут {ticket[i].Begin} - {ticket[i].End}.");
+                                            break;
+                                        case "Mersedes":
+                                            Console.WriteLine($"{i + 1}: автобус {ticket[i].type}, маршрут {ticket[i].Begin} - {ticket[i].End}.");
+                                            break;
+                                        case "Man":
+                                            Console.WriteLine($"{i + 1}: автобус {ticket[i].type}, маршрут {ticket[i].Begin} - {ticket[i].End}.");
+                                            break;
+                                    }
+                                }
+                                Console.ReadKey();
+                                break;
+
+                            case 3:
                                 Console.WriteLine("Выберите тип автобуса: 1 - Maz     ");
                                 Console.WriteLine("                       2 - Mersedes");
                                 Console.WriteLine("                       3 - Man     ");
-                                string switchChoice = Console.ReadLine();
-                                ExceptionTickets.ValidateInt(switchChoice, out int busChoice);
+                                string switchChoice1 = Console.ReadLine();
+                                ExceptionTickets.ValidateInt(switchChoice1, out int busChoice1);
 
 
-                                switch (busChoice)
+                                switch (busChoice1)
                                 {
                                     case 1:
                                         RemainingPlaces(MAZBus);
@@ -155,39 +175,12 @@ namespace Lab_7
                                         break;
                                     case 2:
                                         RemainingPlaces(MersedesBus);
+
                                         Console.ReadKey();
                                         break;
                                     case 3:
                                         RemainingPlaces(ManBus);
                                         Console.ReadKey();
-                                        break;
-
-                                    default:
-                                        Console.WriteLine("Некорректный выбор. Выберите существующую опцию.");
-                                        Console.ReadKey();
-                                        break;
-                                }
-
-                                break;
-
-                            case 3:
-                                Console.WriteLine("Выберите тип автобуса: 1 - Maz     ");
-                                Console.WriteLine("                       2 - Mersedes");
-                                Console.WriteLine("                       3 - Man     ");
-                                string switchValue = Console.ReadLine();
-                                ExceptionTickets.ValidateInt(switchValue, out int value);
-                                switch (value)
-                                {
-                                    case 1:
-
-                                        break; 
-                                    
-                                    case 2:
-
-                                        break; 
-                                    
-                                    case 3:
-
                                         break;
 
                                     default:
@@ -279,13 +272,6 @@ namespace Lab_7
 
         }
 
-        static void OutputInformation(string busName, int freeSeats, int sale, Ticket ticket)
-        {
-            for (int i = 0; i < )
-            Console.Write($"{busName}: {freeSeats} мест {sale} р., {ticket[i].Begin}, {ticket[i].End}");
-            MAZBus.tickets[n1] = ticket[s];
-            n1++;
-            s++;
-        }
+       
     }
 }

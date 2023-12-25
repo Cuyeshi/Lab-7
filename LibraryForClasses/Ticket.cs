@@ -16,6 +16,8 @@ namespace LibraryForClasses
         /// </summary>
         public int End;
 
+        public string type;
+
         /// <summary>
         /// Конструктор для задания параметров объекта класса Ticket.
         /// </summary>
