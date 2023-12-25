@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LibraryForClasses.Bus" Collapsed="true">
+    <Position X="5.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAIAAAAAAIAAAACAAAAAAAA=</HashCode>
+      <FileName>Bus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibraryForClasses.ExceptionTickets" Collapsed="true">
+    <Position X="8.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExceptionTickets.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibraryForClasses.Man" Collapsed="true">
+    <Position X="3.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAA=</HashCode>
+      <FileName>Man.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibraryForClasses.MAZ" Collapsed="true">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAA=</HashCode>
+      <FileName>Maz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibraryForClasses.Mersedes" Collapsed="true">
+    <Position X="5.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAA=</HashCode>
+      <FileName>Mersedes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibraryForClasses.Ticket" Collapsed="true">
+    <Position X="10.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAGAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ticket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
